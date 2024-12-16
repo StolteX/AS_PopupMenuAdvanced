@@ -13,7 +13,7 @@ Module2=|relative|..\B4XMainPage
 NumberOfFiles=2
 NumberOfLibraries=4
 NumberOfModules=2
-Version=7.8
+Version=8.45
 @EndOfDesignText@
 'Code module
 #Region  Project Attributes 
@@ -24,7 +24,7 @@ Version=7.8
 	#iPadOrientations: Portrait, LandscapeLeft, LandscapeRight, PortraitUpsideDown
 	#Target: iPhone, iPad
 	#ATSEnabled: True
-	#MinVersion: 8
+	#MinVersion: 11
 	#ProvisionFile: StolteX.mobileprovision
 #End Region
 
@@ -38,6 +38,7 @@ Private Sub Application_Start (Nav As NavigationController)
 	NavControl = Nav
 	Dim PagesManager As B4XPagesManager
 	PagesManager.Initialize(NavControl)
+	'NavControl.NavigationBarVisible = False
 End Sub
 
 'Template version: B4i-1.0

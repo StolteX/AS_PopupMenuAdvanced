@@ -29,6 +29,11 @@ V1.05
 	-Add OpenMenuAdvanced - You can set the Left, Top and Width value to show the menu on the parent
 V1.06
 	-Add get BackgroundPanel
+V1.07
+	-B4I Improvements - the entire screen is now used for the background shadow
+		-When the navigation bar was hidden, there was an area at the top that did not go dark when the menu was opened
+		-The height of the area is now determined and the gap closed
+		-B4XPages is now required in B4I
 #End If
 
 #Event: ItemClick(Index as Int,Tag as Object)
@@ -46,6 +51,7 @@ Sub Class_Globals
 	
 	Private m_MenuViewGap As Float = 0
 	
+	Private xpnl_Parent As B4XView
 	Private xclv As CustomListView
 	
 	Private xpnl_Background As B4XView
@@ -65,6 +71,7 @@ Sub Class_Globals
 	Private m_ShowTriangle As Boolean = False
 	
 	Private m_isOpen As Boolean = False
+	Private m_TopBarOffset As Float = 0
 	
 	Type ASPM_TitleLabelPropertiesAdvanced(TextColor As Int,xFont As B4XFont,TextAlignment_Vertical As String,TextAlignment_Horizontal As String,BackgroundColor As Int,ItemBackgroundColor As Int,LeftRightPadding As Float,Height As Float)
 	Type ASPM_SeparatorPropertiesAdvanced(Height As Float,BackgroundColor As Int)
@@ -87,6 +94,7 @@ Public Sub Initialize(Parent As B4XView,CallBack As Object,EventName As String)
 	g_OrientationVertical = getOrientationVertical_TOP
 	g_OrientationHorizontal = getOrientationHorizontal_MIDDLE
 	
+	xpnl_Parent = Parent
 	max_x = Parent.Width
 	max_y = Parent.Height
 
@@ -138,6 +146,11 @@ Public Sub OpenMenuOnView(xView As B4XView,Width As Float,Height As Float)
 	m_isOpen = True
 	Dim ff() As Int = ViewScreenPosition(xView)
 
+	#If B4I
+		m_TopBarOffset = B4XPages.GetNativeParent(B4XPages.GetManager.GetTopPage.B4XPage).RootPanel.Top
+	#End If
+	xpnl_Background.SetLayoutAnimated(0,xpnl_Background.Left,-m_TopBarOffset,xpnl_Parent.Width,xpnl_Parent.Height+m_TopBarOffset)
+
 	If g_IsInSpecialContainer = True Then
 		Dim top As Float = ff(1) - LeftTop_Root(1)
 		Dim left As Float = ff(0) - LeftTop_Root(0)
@@ -160,6 +173,8 @@ Public Sub OpenMenuOnView(xView As B4XView,Width As Float,Height As Float)
 	Else
 		top = top + xView.Height + m_MenuViewGap
 	End If
+	
+	top = top + m_TopBarOffset
 	
 	If g_OrientationHorizontal = getOrientationHorizontal_LEFT Then
 	
@@ -239,12 +254,18 @@ End Sub
 'Opens the menu
 Public Sub OpenMenu(Width As Float,Height As Float)
 	m_isOpen = True
+	
+	#If B4I
+		m_TopBarOffset = B4XPages.GetNativeParent(B4XPages.GetManager.GetTopPage.B4XPage).RootPanel.Top
+	#End If
+	xpnl_Background.SetLayoutAnimated(0,xpnl_Background.Left,-m_TopBarOffset,xpnl_Parent.Width,xpnl_Parent.Height+m_TopBarOffset)
+	
 	If xpnl_Menu.Parent.IsInitialized = False Then xpnl_Background.AddView(xpnl_Menu,xpnl_Background.Width/2 - Width/2,xpnl_Background.Height/2 - Height/2,Width,Height)
 	
 	xclv.Base_Resize(Width,Height)
 	xclv.AsView.SetLayoutAnimated(0,0,0,Width,Height)
 
-	xpnl_Menu.SetLayoutAnimated(0,xpnl_Background.Width/2 - Width/2,xpnl_Background.Height/2 - Height/2,Width,Height)
+	xpnl_Menu.SetLayoutAnimated(0,xpnl_Background.Width/2 - Width/2,xpnl_Background.Height/2 - Height/2 + m_TopBarOffset,Width,Height)
 
 	For i = 0 To xclv.Size -1
 		If xclv.GetValue(i) Is String And "Title" = xclv.GetValue(i) Then
@@ -271,6 +292,14 @@ Public Sub OpenMenu(Width As Float,Height As Float)
 End Sub
 Public Sub OpenMenuAdvanced(Left As Float,Top As Float,Width As Float,Height As Float)
 	m_isOpen = True
+	
+	#If B4I
+		m_TopBarOffset = B4XPages.GetNativeParent(B4XPages.GetManager.GetTopPage.B4XPage).RootPanel.Top
+	#End If
+	xpnl_Background.SetLayoutAnimated(0,xpnl_Background.Left,-m_TopBarOffset,xpnl_Parent.Width,xpnl_Parent.Height+m_TopBarOffset)
+	
+	Top = Top + m_TopBarOffset
+	
 	If xpnl_Menu.Parent.IsInitialized = False Then xpnl_Background.AddView(xpnl_Menu,xpnl_Background.Width/2 - Width/2,xpnl_Background.Height/2 - Height/2,Width,Height)
 	
 	xclv.Base_Resize(Width,Height)

@@ -7,6 +7,6 @@ ModuleBreakpoints2=
 ModuleClosedNodes0=4
 ModuleClosedNodes1=
 ModuleClosedNodes2=1
-NavigationStack=Visual Designer,frm_item1.bil,-100,1,ASPopupMenuAdvanced,CreateASPM_TrianglePropertiesAdvanced,491,0,ASPopupMenuAdvanced,Initialize,91,0,ASPopupMenuAdvanced,Class_Globals,51,0,ASPopupMenuAdvanced,setShowTriangle,350,0,ASPopupMenuAdvanced,setMenuViewGap,347,0,ASPopupMenuAdvanced,getSeparatorProperties,324,0,ASPopupMenuAdvanced,getTriangleProperties,326,0,B4XMainPage,OpenMenuOnView,76,1,ASPopupMenuAdvanced,OpenMenuOnView,167,1,ASPopupMenuAdvanced,CloseMenu,261,4
+NavigationStack=ASPopupMenuAdvanced,CloseMenu,261,4,Main,Process_Globals,16,0,ASPopupMenuAdvanced,ini_xclv,130,0,ASPopupMenuAdvanced,Class_Globals,42,5,ASPopupMenuAdvanced,Initialize,85,1,ASPopupMenuAdvanced,OpenMenuOnView,165,6,ASPopupMenuAdvanced,OpenMenu,247,0,B4XMainPage,OpenMenuOnView,100,1,Main,Application_Start,23,2,ASPopupMenuAdvanced,OpenMenuAdvanced,283,2
 SelectedBuild=0
 VisibleModules=2,1
